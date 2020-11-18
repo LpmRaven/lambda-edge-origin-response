@@ -1,16 +1,17 @@
 
 exports.handler = (event, context, callback) => {
     try {
-        const request = event.Records[0].cf.request;
-        const headers = request.headers;
+        const response = event.Records[0].cf.response;
 
-        console.log('headers', headers);
+        if (response.status === '302') {
+            response.status = '301';
+            response.statusDescription = 'Moved Permanently'
+        }
 
-
-        callback(null, request);
+        callback(null, response);
 
     } catch (err) {
         console.error(err);
-        return new Error(err);
+        callback(null, response);
     }
 };
