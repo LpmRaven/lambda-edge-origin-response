@@ -1,7 +1,8 @@
 
 exports.handler = (event, context, callback) => {
+    const response = event.Records[0].cf.response;
+
     try {
-        const response = event.Records[0].cf.response;
 
         if (response.status === '302') {
             response.status = '301';
