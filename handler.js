@@ -19,7 +19,7 @@ exports.handler = async (event) => {
                 return returnValue;
             }
 
-            if (response.uri.slice(-1) === "/") {
+            if (uri.slice(-1) === "/") {
                 const returnValue = getCustomResponseWithUrl(response, uri.slice(0, -1), "301");
                 console.log('returnValue for 301', returnValue);
                 return returnValue;
