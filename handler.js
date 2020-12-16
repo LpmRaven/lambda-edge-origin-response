@@ -2,6 +2,7 @@ const path = require('path');
 
 exports.handler = async (event) => {
     const response = event.Records[0].cf.response;
+    const request = event.Records[0].cf.request;
 
     try {
         const uri = request.uri;
