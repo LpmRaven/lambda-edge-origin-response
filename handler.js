@@ -1,3 +1,4 @@
+const path = require('path');
 
 exports.handler = async (event) => {
     const response = event.Records[0].cf.response;
