@@ -1,4 +1,5 @@
 const path = require('path');
+const { getCustomResponseWithUrl } = require('./helpers/get-custom-response-with-url');
 
 exports.handler = async (event) => {
     const response = event.Records[0].cf.response;
