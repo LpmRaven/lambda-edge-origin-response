@@ -9,7 +9,6 @@ exports.handler = async (event) => {
         const uri = request.uri;
         const parsedPath = path.parse(request.uri);
 
-        console.log(`response.headers['location']`, response.headers['location']);
         console.log('request.uri', request.uri);
         console.log('response.status', response.status);
 
@@ -17,18 +16,21 @@ exports.handler = async (event) => {
             if (parsedPath.base === 'index.html') {
                 const returnValue = getCustomResponseWithUrl(response, uri.slice(0, -11), "200");
                 console.log('returnValue for 200', returnValue);
+                console.log('returnValue headers', returnValue.headers.location);
                 return returnValue;
             }
 
             if (uri.slice(-1) === "/") {
                 const returnValue = getCustomResponseWithUrl(response, uri.slice(0, -1), "301");
                 console.log('returnValue for 301', returnValue);
+                console.log('returnValue headers', returnValue.headers.location);
                 return returnValue;
             }
 
             if (response.status === '302') {
                 const returnValue = getCustomResponseWithUrl(response, uri, "302");
                 console.log('returnValue for 302', returnValue);
+                console.log('returnValue headers', returnValue.headers.location);
                 return returnValue;
             }
         }
