@@ -10,21 +10,27 @@ exports.handler = async (event) => {
 
         console.log(`response.headers['location']`, response.headers['location']);
         console.log('request.uri', request.uri);
+        console.log('response.status', response.status);
 
+        if (uri) {
+            if (parsedPath.base === 'index.html') {
+                const returnValue = getCustomResponseWithUrl(response, uri.slice(0, -11), "200");
+                console.log('returnValue for 200', returnValue);
+                return returnValue;
+            }
 
-        if (response.status === '302') {
-            console.log('change to 301');
-            response.status = '301';
-            response.statusDescription = 'Moved Permanently'
+            if (response.uri.slice(-1) === "/") {
+                const returnValue = getCustomResponseWithUrl(response, uri.slice(0, -1), "301");
+                console.log('returnValue for 301', returnValue);
+                return returnValue;
+            }
+
+            if (response.status === '302') {
+                const returnValue = getCustomResponseWithUrl(response, uri, "302");
+                console.log('returnValue for 302', returnValue);
+                return returnValue;
+            }
         }
-
-        // if (parsedPath.base === 'index.html') {
-        //     response.uri = response.uri.slice(0, -11);
-        // }
-
-        // if (response.uri.slice(-1) === "/") {
-        //     response.uri = response.uri.slice(0, -1);
-        // }
 
         return response;
 

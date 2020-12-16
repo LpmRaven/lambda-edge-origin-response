@@ -1,24 +1,17 @@
 const path = require('path');
 
-const getCustomResponseWithUrl = (uri, statusCode) => {
-    const parsedPath = path.parse(uri);
-    let newUri;
-    if (parsedPath.base !== 'index.html') { // Allows you to specify index.html as default root object in CloudFront
-        newUri = path.join(parsedPath.dir, parsedPath.base, 'index.html');
-    } else {
-        newUri = path.join(parsedPath.dir, parsedPath.base);
-    }
-
-
+const getCustomResponseWithUrl = (response, uri, statusCode) => {
     if (statusCode === "302") {
         return (
             {
+                ...response,
                 status: '302',
                 statusDescription: 'Found',
                 headers: {
+                    ...response.headers,
                     location: [{
                         key: 'Location',
-                        value: newUri,
+                        value: uri,
                     }],
                     'cache-control': [{
                         key: 'Cache-Control',
@@ -29,6 +22,47 @@ const getCustomResponseWithUrl = (uri, statusCode) => {
         )
     }
 
+    if (statusCode === "301") {
+        return (
+            {
+                ...response,
+                status: '301',
+                statusDescription: 'Moved Permanently',
+                headers: {
+                    ...response.headers,
+                    location: [{
+                        key: 'Location',
+                        value: uri,
+                    }],
+                    'cache-control': [{
+                        key: 'Cache-Control',
+                        value: "max-age=3600"
+                    }],
+                },
+            }
+        )
+    }
+
+    if (statusCode === "200") {
+        return (
+            {
+                ...response,
+                status: '200',
+                statusDescription: 'OK',
+                headers: {
+                    ...response.headers,
+                    location: [{
+                        key: 'Location',
+                        value: uri,
+                    }],
+                    'cache-control': [{
+                        key: 'Cache-Control',
+                        value: "max-age=3600"
+                    }],
+                },
+            }
+        )
+    }
 
 };
 
