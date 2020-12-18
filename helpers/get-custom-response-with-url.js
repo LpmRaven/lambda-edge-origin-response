@@ -1,67 +1,46 @@
 const path = require('path');
 
-const getCustomResponseWithUrl = (response, uri, statusCode) => {
-    if (statusCode === "302") {
-        return (
-            {
-                ...response,
-                status: '302',
-                statusDescription: 'Found',
-                headers: {
-                    ...response.headers,
-                    location: [{
-                        key: 'Location',
-                        value: uri,
-                    }],
-                    'cache-control': [{
-                        key: 'Cache-Control',
-                        value: "max-age=3600"
-                    }],
-                },
-            }
-        )
-    }
+const getCustomResponseWithUrl = (request, response) => {
+    if (request.uri) {
+        const uri = request.uri;
+        const parsedPath = path.parse(request.uri);
 
-    if (statusCode === "301") {
-        return (
-            {
-                ...response,
-                status: '301',
-                statusDescription: 'Moved Permanently',
-                headers: {
-                    ...response.headers,
-                    location: [{
-                        key: 'Location',
-                        value: uri,
-                    }],
-                    'cache-control': [{
-                        key: 'Cache-Control',
-                        value: "max-age=3600"
-                    }],
-                },
-            }
-        )
-    }
+        if (parsedPath.base === 'index.html') {
+            const newUri = uri.slice(0, -11);
 
-    if (statusCode === "200") {
-        return (
-            {
-                ...response,
-                status: '200',
-                statusDescription: 'OK',
-                headers: {
-                    ...response.headers,
-                    location: [{
-                        key: 'Location',
-                        value: uri,
-                    }],
-                    'cache-control': [{
-                        key: 'Cache-Control',
-                        value: "max-age=3600"
-                    }],
-                },
-            }
-        )
+            response.status = '200';
+            response.statusDescription = 'OK';
+            response.headers['location'] = [{
+                key: 'Location',
+                value: newUri
+            }];
+
+            return response;
+        }
+
+        if (uri.slice(-1) === "/") {
+            const newUri = uri.slice(0, -1);
+
+            response.status = '301';
+            response.statusDescription = 'Moved Permanently';
+            response.headers['location'] = [{
+                key: 'Location',
+                value: newUri
+            }];
+
+            return response;
+        }
+
+        if (responseWithCacheControl.status === '302') {
+            response.status = '302';
+            response.statusDescription = 'Found';
+            response.headers['location'] = [{
+                key: 'Location',
+                value: newUri
+            }];
+
+            return response;
+        }
     }
 
 };
