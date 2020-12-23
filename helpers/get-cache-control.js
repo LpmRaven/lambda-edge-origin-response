@@ -7,6 +7,7 @@ const getCacheControl = (request, response) => {
 
         if (
             parsedPath.ext === ".js" ||
+            parsedPath.ext === ".webp" ||
             parsedPath.ext === ".css" ||
             parsedPath.ext === ".json" ||
             parsedPath.ext === ".woff" ||
@@ -24,7 +25,7 @@ const getCacheControl = (request, response) => {
         ) {
             response.headers['cache-control'] = [{
                 key: 'Cache-Control',
-                value: 'cache-control: public, max-age=31536000, immutable'
+                value: 'public, max-age=31536000, immutable'
             }];
         }
 
