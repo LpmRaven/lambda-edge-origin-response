@@ -32,6 +32,7 @@ const getCustomResponseWithUrl = (request, response) => {
         }
 
         if (response && response.status === '302') {
+            const newUri = uri;
             //response.status = '302';
             response.statusDescription = 'Found';
             response.headers['location'] = [{
