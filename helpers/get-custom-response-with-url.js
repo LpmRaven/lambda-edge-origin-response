@@ -5,7 +5,7 @@ const getCustomResponseWithUrl = (request, response) => {
         const uri = request.uri;
         const parsedPath = path.parse(request.uri);
 
-        if (parsedPath.base === 'index.html') {
+        if (parsedPath && parsedPath.base === 'index.html') {
             const newUri = uri.slice(0, -11);
 
             response.status = '200';
@@ -31,8 +31,8 @@ const getCustomResponseWithUrl = (request, response) => {
             return response;
         }
 
-        if (responseWithCacheControl.status === '302') {
-            response.status = '302';
+        if (response && response.status === '302') {
+            //response.status = '302';
             response.statusDescription = 'Found';
             response.headers['location'] = [{
                 key: 'Location',
