@@ -9,7 +9,6 @@ const getCacheControl = (request, response) => {
             parsedPath.ext === ".js" ||
             parsedPath.ext === ".webp" ||
             parsedPath.ext === ".css" ||
-            parsedPath.ext === ".json" ||
             parsedPath.ext === ".woff" ||
             parsedPath.ext === ".woff2" ||
             parsedPath.ext === ".ttf" ||
@@ -31,6 +30,7 @@ const getCacheControl = (request, response) => {
 
         if (
             parsedPath.ext === ".html" ||
+            parsedPath.ext === ".json" ||
             parsedPath.name === "sw" && parsedPath.ext === ".js" ||
             parsedPath.base === "page-data.json" ||
             parsedPath.base === "app-data.json"
