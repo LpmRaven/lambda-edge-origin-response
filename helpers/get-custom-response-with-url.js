@@ -42,8 +42,11 @@ const getCustomResponseWithUrl = (request, response) => {
 
             return response;
         }
+
+        return response;
     }
 
+    return response;
 };
 
 module.exports = {
