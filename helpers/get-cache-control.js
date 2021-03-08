@@ -6,7 +6,7 @@ const getCacheControl = (request, response) => {
         const parsedPath = path.parse(request.uri);
 
         if (
-            parsedPath.ext === ".js" ||
+            parsedPath.ext === ".js" && parsedPath.name !== "sw" ||
             parsedPath.ext === ".webp" ||
             parsedPath.ext === ".css" ||
             parsedPath.ext === ".woff" ||
@@ -41,7 +41,12 @@ const getCacheControl = (request, response) => {
             }];
         }
 
+        console.log('request.uri', request.uri);
+        console.log('cache-control', response.headers['cache-control']);
+
         return response;
+    } else {
+        console.log('no request uri!!!!!!!!', request);
     }
 
     return response;

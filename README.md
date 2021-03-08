@@ -26,3 +26,9 @@ If you wish to add adjustments for other frameworks, please feel free to open an
 | Accept-Ranges               | bytes                                 |
 | Content-Security-Policy     | frame-ancestors 'self'                |
 
+## Check headers
+
+### GatsbyJs
+
+`npx check-gatsby-caching https://url-of-your-gatsby-site.com` — https://www.npmjs.com/package/check-gatsby-caching
+
