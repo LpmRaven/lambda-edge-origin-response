@@ -11,7 +11,7 @@ describe('check cache control returns the correct headers', () => {
 
     test('will return immutable cache-control for js files', async () => {
         const mockRequest = {
-            uri: 'https://waterproofjack.com/en-gb/webpack-runtime-4f2783aa70db07855ff4.js'
+            uri: '/en-gb/webpack-runtime-4f2783aa70db07855ff4.js'
         }
         const mockResponse = {
             headers: {}

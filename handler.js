@@ -11,6 +11,8 @@ exports.handler = async (event) => {
         const responseWithCacheControl = getCacheControl(request, responseWithSecurityHeaders);
         const responseWithCustomUrl = getCustomResponseWithUrl(request, responseWithCacheControl);
 
+        console.log('responseWithCustomUrl', responseWithCustomUrl);
+
         return responseWithCustomUrl;
 
     } catch (err) {

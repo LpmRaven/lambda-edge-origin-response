@@ -43,6 +43,8 @@ const getCacheControl = (request, response) => {
 
         console.log('request.uri', request.uri);
         console.log('cache-control', response.headers['cache-control']);
+        console.log('path.parse(request.uri)', path.parse(request.uri));
+
 
         return response;
     } else {
