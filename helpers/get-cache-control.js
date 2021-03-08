@@ -2,7 +2,7 @@ const path = require('path');
 
 const getCacheControl = (request, response) => {
 
-    if (request.uri) {
+    if (request.uri && response.status === '200') {
         const parsedPath = path.parse(request.uri);
 
         if (

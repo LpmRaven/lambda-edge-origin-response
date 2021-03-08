@@ -7,13 +7,13 @@ exports.handler = async (event) => {
     const request = event.Records[0].cf.request;
 
     try {
-        const responseWithSecurityHeaders = getSecurityHeaders(response);
+        const responseWithCustomUrl = getCustomResponseWithUrl(request, response);
+        const responseWithSecurityHeaders = getSecurityHeaders(responseWithCustomUrl);
         const responseWithCacheControl = getCacheControl(request, responseWithSecurityHeaders);
-        const responseWithCustomUrl = getCustomResponseWithUrl(request, responseWithCacheControl);
 
-        console.log('responseWithCustomUrl', responseWithCustomUrl);
+        console.log('responseWithCacheControl', responseWithCacheControl);
 
-        return responseWithCustomUrl;
+        return responseWithCacheControl;
 
     } catch (err) {
         console.error(err);
