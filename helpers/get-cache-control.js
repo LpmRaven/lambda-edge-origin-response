@@ -31,7 +31,6 @@ const getCacheControl = (request, response) => {
         if (
             parsedPath.ext === ".html" ||
             parsedPath.ext === ".json" ||
-            parsedPath.name === "sw" && parsedPath.ext === ".js" ||
             parsedPath.base === "page-data.json" ||
             parsedPath.base === "app-data.json"
         ) {
@@ -41,14 +40,16 @@ const getCacheControl = (request, response) => {
             }];
         }
 
-        console.log('request.uri', request.uri);
-        console.log('cache-control', response.headers['cache-control']);
-        console.log('path.parse(request.uri)', path.parse(request.uri));
-
+        if (
+            parsedPath.name === "sw" && parsedPath.ext === ".js"
+        ) {
+            response.headers['cache-control'] = [{
+                key: 'Cache-Control',
+                value: 'no-store, no-cache, max-age=0, must-revalidate'
+            }];
+        }
 
         return response;
-    } else {
-        console.log('no request uri!!!!!!!!', request);
     }
 
     return response;
