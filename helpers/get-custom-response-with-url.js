@@ -15,6 +15,8 @@ const getCustomResponseWithUrl = (request, response) => {
                 value: newUri
             }];
 
+            console.log('index.html newUri', newUri);
+
             return response;
         }
 
@@ -28,6 +30,8 @@ const getCustomResponseWithUrl = (request, response) => {
                 value: newUri
             }];
 
+            console.log('slash newUri', newUri);
+
             return response;
         }
 
@@ -39,6 +43,8 @@ const getCustomResponseWithUrl = (request, response) => {
                 key: 'Location',
                 value: newUri
             }];
+
+            console.log('302 newUri', newUri);
 
             return response;
         }
