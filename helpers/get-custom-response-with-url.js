@@ -1,9 +1,12 @@
 const path = require('path');
 
 const getCustomResponseWithUrl = (request, response) => {
+    console.log("getCustomResponseWithUrl");
     if (request.uri) {
         const uri = request.uri;
         const parsedPath = path.parse(request.uri);
+
+        console.log("parsedPath", parsedPath);
 
         if (parsedPath && parsedPath.base === 'index.html') {
             const newUri = uri.slice(0, -11);
